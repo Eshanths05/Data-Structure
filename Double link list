@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *prev;
+    struct node *next;
+};
+
+struct node *head = NULL;
+
+/* CREATE NODE */
+struct node* create(int value)
+{
+    struct node *nn = malloc(sizeof(struct node));
+
+    nn->data = value;
+    nn->prev = NULL;
+    nn->next = NULL;
+
+    return nn;
+}
+
+/* INSERT AT END */
+void insert_end(int value)
+{
+    struct node *nn = create(value);
+
+    if(head == NULL)
+    {
+        head = nn;
+        return;
+    }
+
+    struct node *temp = head;
+
+    while(temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+
+    temp->next = nn;
+    nn->prev = temp;
+}
+
+/* INSERT AT BEGINNING */
+void insert_begin(int value)
+{
+    struct node *nn = create(value);
+
+    if(head == NULL)
+    {
+        head = nn;
+        return;
+    }
+
+    nn->next = head;
+    head->prev = nn;
+    head = nn;
+}
+
+/* DISPLAY (optional but useful) */
+void display()
+{
+    struct node *temp = head;
+
+    while(temp != NULL)
+    {
+        printf("%d <-> ", temp->data);
+        temp = temp->next;
+    }
+
+    printf("NULL\n");
+}
+
+int main()
+{
+    insert_end(10);
+    insert_end(20);
+    insert_end(30);
+
+    insert_begin(5);
+    insert_begin(1);
+
+    display();
+
+    return 0;
+}
