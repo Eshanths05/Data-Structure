@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+	int data;
+	struct node*next;
+};
+struct node*head=NULL;
+struct node*tail=NULL;
+void insert(int data)
+{
+	struct node*nn=malloc(sizeof(*nn));
+	nn->data=data;
+	if(head==NULL)
+	{
+		head=nn;
+		tail=nn;
+		nn->next=nn;
+	}
+	else
+	{
+		tail->next=nn;
+		nn->next=head;
+		tail=tail->next;
+}
+}
+void rotate(int a)
+{
+	for(int i=0;i<a;i++)
+	{
+		head=head->next;
+		tail=tail->next;
+	}
+}
+void display()
+{
+	struct node*temp=head;
+	while(temp->next!=head)
+	{
+		printf("%d->",temp->data);
+		temp=temp->next;
+	}
+	printf("%d->NULL\n",tail->data);
+}
+int main()
+{
+	for(int i=0;i<5;i++)
+	{
+		insert(i);
+	}
+	display();
+	rotate(2);
+	display();
+	return 0;
+}
